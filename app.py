@@ -26,8 +26,6 @@ def translation(text):
     full_output = output
     output = output[0]['translation_text']
     result = {'inference_time': end_time - start_time,
-              'source': source,
-              'target': target,
               'result': output,
               'full_output': full_output}
     return result
