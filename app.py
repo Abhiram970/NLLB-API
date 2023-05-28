@@ -12,15 +12,15 @@ tokenizer = AutoTokenizer.from_pretrained('facebook/nllb-200-distilled-600M')
         
 
 
-def translation(source, target, text):
+def translation(text):
     start_time = time.time()
     #source = flores_codes[source]
     #target = flores_codes[target]
+    lang = detect(text)
 
-
-    translator = pipeline('translation', model=model, tokenizer=tokenizer, src_lang=source, tgt_lang=target)
+    translator = pipeline('translation', model=model, tokenizer=tokenizer, src_lang=lang , tgt_lang="eng_Latn")
     output = translator(text, max_length=400)
-
+    
     end_time = time.time()
 
     full_output = output
@@ -39,8 +39,7 @@ if __name__ == '__main__':
     # define gradio demo
     lang_codes = list(flores_codes.keys())
     #inputs = [gr.inputs.Radio(['nllb-distilled-600M', 'nllb-1.3B', 'nllb-distilled-1.3B'], label='NLLB Model'),
-    inputs = [gr.inputs.Dropdown(lang_codes, default='Yue Chinese', label='Source'),
-              gr.inputs.Dropdown(lang_codes, default='English', label='Target'),
+    inputs = [
               gr.inputs.Textbox(lines=5, label="Input text"),
               ]
 
